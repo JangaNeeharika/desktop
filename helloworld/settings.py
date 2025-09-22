@@ -97,7 +97,7 @@ import os
 import dj_database_url
 
 DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['orphanage-home.onrender.com', '127.0.0.1', 'localhost']
 DATABASES = {
     "default": dj_database_url.config(default=os.environ.get("DATABASE_URL"))
 }
