@@ -2,19 +2,25 @@ from pathlib import Path
 import os
 import dj_database_url  # Make sure to install with `pip install dj-database-url`
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# -------------------------------
+# BASE DIRECTORY
+# -------------------------------
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', 'unsafe-dev-key')  # Use Render env variable
+# -------------------------------
+# SECURITY
+# -------------------------------
+SECRET_KEY = os.environ.get('SECRET_KEY', 'unsafe-dev-key')  # Use Render env variable in production
+DEBUG = os.environ.get('DEBUG', 'True') == 'True'  # True for dev, False for production
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False  # Must be False in production
+# Hosts
+ALLOWED_HOSTS = os.environ.get(
+    'DJANGO_ALLOWED_HOSTS', '127.0.0.1,localhost,orphanage-home.onrender.com'
+).split(',')
 
-# Add your Render service URL here
-ALLOWED_HOSTS = ['your-app-name.onrender.com']  
-
-# Application definition
+# -------------------------------
+# APPLICATION DEFINITION
+# -------------------------------
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -25,7 +31,6 @@ INSTALLED_APPS = [
     'myapp',
 ]
 
-# Middleware
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',  # For static files
@@ -57,59 +62,49 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'helloworld.wsgi.application'
 
-# Database (Use Render Postgres if available)
+# -------------------------------
+# DATABASE CONFIG
+# -------------------------------
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL', f"sqlite:///{BASE_DIR / 'db.sqlite3'}")
+    "default": dj_database_url.config(
+        default=os.environ.get("DATABASE_URL", f"sqlite:///{BASE_DIR / 'db.sqlite3'}")
     )
 }
 
-# Password validation
+# -------------------------------
+# PASSWORD VALIDATION
+# -------------------------------
 AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',},
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',},
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',},
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# Internationalization
+# -------------------------------
+# INTERNATIONALIZATION
+# -------------------------------
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
+USE_L10N = True
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
+# -------------------------------
+# STATIC FILES
+# -------------------------------
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / "myapp" / "static"]
-
-# Serve static files with WhiteNoise
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Media files
+# -------------------------------
+# MEDIA FILES
+# -------------------------------
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Default primary key field type
+# -------------------------------
+# DEFAULT PRIMARY KEY FIELD TYPE
+# -------------------------------
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-import os
-import dj_database_url
-
-DEBUG = True
-ALLOWED_HOSTS = ['orphanage-home.onrender.com', '127.0.0.1', 'localhost']
-DATABASES = {
-    "default": dj_database_url.config(default=os.environ.get("DATABASE_URL"))
-}
-
-STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-import os
-import dj_database_url
-
-DATABASES = {
-    "default": dj_database_url.config(
-        default=f"sqlite:///{os.path.join(BASE_DIR, 'db.sqlite3')}"
-    )
-}
-
