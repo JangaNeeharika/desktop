@@ -1,0 +1,196 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Adopt & Donate - Hope Haven Orphanage</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #3f51b5, #5c6bc0);
+      color: #fff;
+    }
+    header, footer {
+      text-align: center;
+      padding: 30px 10px;
+      background: rgba(0, 0, 0, 0.6);
+    }
+    h1 {
+      margin-bottom: 10px;
+      font-size: 2.5em;
+    }
+    section {
+      padding: 40px 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .child-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .child-card {
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    .child-card img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 10px;
+    }
+    h3 {
+      margin: 10px 0 5px;
+      color: #ffd54f;
+    }
+    .btn {
+      background-color: #ffd54f;
+      color: #000;
+      padding: 10px 15px;
+      border: none;
+      margin-top: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+    .btn:hover {
+      background-color: #fff;
+      color: #000;
+    }
+    .form-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #2e3d88;
+      padding: 30px;
+      border-radius: 10px;
+      z-index: 10;
+      width: 90%;
+      max-width: 400px;
+    }
+    .form-popup h2 {
+      margin-bottom: 10px;
+      color: #ffe082;
+    }
+    input, textarea {
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+    }
+    #scanner {
+      display: block;
+      width: 100%;
+      max-width: 250px;
+      margin: 10px auto;
+    }
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      z-index: 5;
+    }
+    .close-btn {
+      background: #f44336;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      float: right;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Adopt & Support a Child</h1>
+  <p>Choose a child or donate generally to support their future 🌱</p>
+</header>
+
+<section>
+  <h2 style="text-align:center;">Meet Our Children</h2>
+  <div class="child-list">
+    {% for child in children %}
+    <div class="child-card">
+      <img src="{{ child.photo.url }}" alt="{{ child.name }}">
+      <h3>{{ child.name }} (Age {{ child.age }})</h3>
+      <p>{{ child.description }}</p>
+      <button class="btn" onclick="openForm('{{ child.id }}', '{{ child.name }}')">Sponsor {{ child.name }}</button>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div style="text-align:center; margin-top: 40px;">
+    <button class="btn" onclick="openForm('', 'General Donation')">Make a General Donation</button>
+  </div>
+</section>
+
+<!-- Donation Form Popup -->
+<div class="overlay" id="overlay" onclick="closeForm()"></div>
+<div class="form-popup" id="donationForm">
+  <button class="close-btn" onclick="closeForm()">X</button>
+  <h2 id="formTitle">Support a Child</h2>
+
+  <form method="POST" id="donation-form">
+    {% csrf_token %}
+    <input type="hidden" name="child_id" id="child-id-input">
+
+    <label>Your Name</label>
+    <input type="text" name="donor_name" placeholder="Full Name" required>
+
+    <label>phone</label>
+    <input type="number" name="phone" placeholder="Phone" required>
+
+    <label>Email</label>
+    <input type="email" name="email" placeholder="you@example.com" required>
+
+    <label>Amount (INR)</label>
+    <input type="number" name="amount" placeholder="1000" required>
+
+    <label>Message</label>
+    <textarea name="message" placeholder="Your message or details (optional)"></textarea>
+
+    <p style="text-align:center;">Scan to Pay:</p>
+    <img id="scanner" src="{% static 'scanner.jpg' %}" alt="Scan to Pay QR">
+
+    <button type="submit" class="btn">Confirm & Donate</button>
+  </form>
+</div>
+
+<footer>
+  <p>Thank you for your kindness 💖 Together, we build dreams!</p>
+</footer>
+
+<script>
+  function openForm(childId, childName) {
+    const form = document.getElementById('donation-form');
+    document.getElementById('formTitle').textContent = `Support: ${childName}`;
+    document.getElementById('child-id-input').value = childId;
+
+    const url = childId
+      ? `{% url 'sponsor_child' 99999 %}`.replace("99999", childId)
+      : `{% url 'sponsor_general' %}`;
+    form.action = url;
+
+    document.getElementById('donationForm').style.display = 'block';
+    document.getElementById('overlay').style.display = 'block';
+  }
+
+  function closeForm() {
+    document.getElementById('donationForm').style.display = 'none';
+    document.getElementById('overlay').style.display = 'none';
+  }
+</script>
+
+</body>
+</html>

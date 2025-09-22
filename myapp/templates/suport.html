@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Adopt & Donate - Hope Haven Orphanage</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #3f51b5, #1a237e);
+      color: #fff;
+    }
+    header, footer {
+      text-align: center;
+      padding: 30px 10px;
+      background: rgba(0, 0, 0, 0.7);
+    }
+    h1 {
+      font-size: 2.8em;
+      margin: 0;
+    }
+    section {
+      padding: 40px 20px;
+      max-width: 900px;
+      margin: auto;
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+    }
+    form {
+      background-color: #2e3d88;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+    }
+    form h2 {
+      color: #ffe082;
+      text-align: center;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+    input:focus, textarea:focus {
+      outline: 2px solid #ffd54f;
+    }
+    .btn {
+      background-color: #ffd54f;
+      color: #000;
+      padding: 12px 18px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      display: block;
+      width: 100%;
+      margin-top: 10px;
+      transition: 0.3s ease;
+    }
+    .btn:hover {
+      background-color: #fff;
+    }
+    #scanner {
+      display: block;
+      width: 200px;
+      margin: 15px auto;
+      border-radius: 10px;
+    }
+    footer {
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Adopt & Support a Child</h1>
+  <p>Choose a child or donate generally to support their future 🌱</p>
+</header>
+
+<section>
+  <form method="POST" action="{% url 'sponsor_general' %}">
+    {% csrf_token %}
+    <h2>Make a General Donation</h2>
+
+    <label>Your Name</label>
+    <input type="text" name="donor_name" placeholder="Full Name" required>
+
+    <label>Email</label>
+    <input type="email" name="email" placeholder="you@example.com" required>
+
+    <label>Phone</label>
+    <input type="text" name="phone" placeholder="Phone Number" required>
+
+    <label>Amount (INR)</label>
+    <input type="number" name="amount" placeholder="1000" required>
+
+    <label>Message</label>
+    <textarea name="message" placeholder="Your message or details (optional)"></textarea>
+
+    <p style="text-align:center;">Scan to Pay:</p>
+    <img id="scanner" src="{% static 'scanner.jpg' %}" alt="Scan to Pay QR">
+
+    <button type="submit" class="btn">Confirm & Donate</button>
+  </form>
+</section>
+
+<footer>
+  <p>Thank you for your kindness 💖 Together, we build dreams!</p>
+</footer>
+
+</body>
+</html>

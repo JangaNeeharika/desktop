@@ -1,0 +1,320 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sponsorship - Sunrise Old Age Home</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: #f4f5fa;
+    }
+
+    header {
+      background: #3f51b5;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+
+    section {
+      padding: 30px 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .needs {
+      background: #fff;
+      border-radius: 10px;
+      max-width: 700px;
+      margin: auto;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .needs h2 {
+      color: #e65100;
+      margin-bottom: 15px;
+    }
+
+    .needs li {
+      background: #fce4ec;
+      margin: 8px 0;
+      padding: 10px;
+      border-left: 5px solid #f06292;
+      text-align: left;
+      font-size: 0.95rem;
+    }
+
+    .sponsorship-title {
+      text-align: center;
+      font-size: 2rem;
+      color: #2e3b55;
+      margin-bottom: 30px;
+    }
+
+    .elder-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .elder-card {
+      background: white;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+      width: 160px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .elder-card:hover {
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .elder-card img {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .elder-card h4 {
+      margin: 10px 0 5px;
+      font-size: 1rem;
+    }
+
+    .elder-card p {
+      font-size: 0.85rem;
+      color: #555;
+    }
+
+    .overlay, .popup {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 10;
+    }
+
+    .overlay {
+      background: rgba(0,0,0,0.5);
+      z-index: 9;
+    }
+
+    .popup {
+      z-index: 11;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .popup-content {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 400px;
+      position: relative;
+    }
+
+    .popup-content h3 {
+      margin-top: 0;
+      color: #3f51b5;
+    }
+
+    .popup-content input,
+    .popup-content textarea {
+      width: 100%;
+      margin: 8px 0;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .popup-content img {
+      width: 120px;
+      margin: 10px auto;
+      display: block;
+    }
+
+    .popup-content button {
+      width: 100%;
+      padding: 10px;
+      background: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    .popup-content .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 18px;
+      cursor: pointer;
+      color: #999;
+    }
+
+    .toggle-btn {
+      background: #ff7043;
+      color: white;
+      padding: 15px 30px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 8px;
+      margin: 40px auto 20px;
+      display: block;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .toggle-btn:hover {
+      background: #f4511e;
+    }
+
+    .general-donation {
+      display: none;
+      animation: fadeIn 0.5s ease-in-out;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    .general-donation label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .general-donation input,
+    .general-donation textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      margin-top: 5px;
+    }
+
+    .general-donation button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      font-size: 1rem;
+      background: #0288d1;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .general-donation button:hover {
+      background: #0277bd;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Our Old Age Home</h1>
+  <p>Caring for our elders with dignity and love</p>
+</header>
+
+<section class="needs">
+  <h2>🧺 Current Needs of Our Home</h2>
+  <ul>
+    {% for need in needs %}
+      <li>
+        <strong>{{ need.item }}</strong> — {{ need.quantity }}<br>
+        <small>{{ need.note }}</small>
+      </li>
+    {% empty %}
+      <li>No current needs available.</li>
+    {% endfor %}
+  </ul>
+</section>
+
+<section>
+  <h2 class="sponsorship-title">💖 Sponsorship</h2>
+  <div class="elder-list">
+    {% for elder in elders %}
+    <div class="elder-card" onclick="openSponsorForm('{{ elder.name }}', '{{ elder.age }}', '{{ elder.medicine_expenses }}')">
+      <img src="{{ elder.photo.url }}" alt="{{ elder.name }}">
+      <h4>{{ elder.name }}</h4>
+      <p>Age: {{ elder.age }}</p>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- Sponsorship Popup -->
+<div class="overlay" id="overlay" onclick="closePopup()"></div>
+<div class="popup" id="popupForm">
+  <div class="popup-content">
+    <span class="close-btn" onclick="closePopup()">×</span>
+    <h3 id="popupTitle">Sponsor an Elder</h3>
+    <form method="POST" action="">
+      {% csrf_token %}
+      <label>Your Name</label>
+      <input type="text" name="donor_name" placeholder="Your Name" required>
+      <label>Phone Number</label>
+      <input type="tel" name="phone" placeholder="Phone Number" required>
+      <label>Email</label>
+      <input type="email" name="email" placeholder="Email" required>
+      <label>Monthly Medical Expense (INR):</label>
+      <input type="text" name="amount" id="expenseField" required>
+      <p style="text-align:center;">Scan to Pay:</p>
+      <img src="{% static 'scanner.jpg' %}" alt="Scan to Pay">
+      <button type="submit">Confirm Sponsorship</button>
+    </form>
+  </div>
+</div>
+
+
+
+    
+{% if submitted %}
+<script>
+  window.onload = function () {
+    alert("Thank you for your kindness! Your donation details have been recorded.");
+  }
+</script>
+{% endif %}
+
+<script>
+  function openSponsorForm(name, age, expense) {
+    document.getElementById('popupTitle').textContent = `Sponsor ${name} (Age ${age})`;
+    document.getElementById('expenseField').value = expense;
+    document.getElementById('popupForm').style.display = 'flex';
+    document.getElementById('overlay').style.display = 'block';
+  }
+
+  function closePopup() {
+    document.getElementById('popupForm').style.display = 'none';
+    document.getElementById('overlay').style.display = 'none';
+  }
+
+  function toggleGeneralDonation() {
+    const section = document.getElementById('generalDonationForm');
+    section.style.display = section.style.display === 'block' ? 'none' : 'block';
+  }
+</script>
+
+</body>
+</html>

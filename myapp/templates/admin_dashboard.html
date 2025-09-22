@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>📊 Admin Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      padding: 40px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .chart-container {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 40px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📊 Admin Dashboard</h1>
+
+  <div class="chart-container">
+    <h2>💰 Donations Over Time (Monthly)</h2>
+    <canvas id="donationChart" height="100"></canvas>
+  </div>
+
+  <div class="chart-container">
+    <h2>🍽️ Meal Bookings Per Month</h2>
+    <canvas id="mealChart" height="100"></canvas>
+  </div>
+
+  <script>
+    fetch("{% url 'chart_data' %}")
+      .then(response => response.json())
+      .then(data => {
+        new Chart(document.getElementById('donationChart'), {
+          type: 'bar',
+          data: {
+            labels: data.labels,
+            datasets: [{
+              label: 'Total Donations (₹)',
+              data: data.donations,
+              backgroundColor: '#4caf50',
+              borderRadius: 6
+            }]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+
+        new Chart(document.getElementById('mealChart'), {
+          type: 'line',
+          data: {
+            labels: data.labels,
+            datasets: [{
+              label: 'Meal Bookings',
+              data: data.meals,
+              borderColor: '#2196f3',
+              tension: 0.4,
+              fill: false
+            }]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      });
+  </script>
+
+</body>
+</html>
