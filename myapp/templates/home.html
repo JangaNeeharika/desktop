@@ -3,18 +3,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title> Orphanage home </title>
+  <title>Orphanage Home</title>
+
   <style>
-    /* ...your original CSS unchanged... */
     * {
-      margin: 5;
-      padding: 10;
+      margin: 5px;
+      padding: 10px;
       box-sizing: border-box;
       font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     }
 
     html, body {
-     
       scroll-behavior: smooth;
       overflow-x: hidden;
     }
@@ -23,7 +22,6 @@
       position: fixed;
       width: 100%;
       background-color: rgba(0, 0, 0, 0.7);
-      color: rgb(32, 148, 115);
       padding: 20px 30px;
       display: flex;
       justify-content: flex-end;
@@ -46,74 +44,17 @@
       justify-content: center;
       align-items: center;
       text-align: center;
+      scroll-margin-top: 120px;
     }
 
     .hero {
       background: url("{% static 'bk_img.jpg' %}") no-repeat center center/cover;
-      color: rgb(249, 249, 249);
+      color: white;
     }
 
-    .hero h1 {
-      font-size: 3em;
-      background: rgba(240, 171, 171, 0.6);
-      padding: 20px;
-      border-radius: 10px;
-    }
-
-    .hero p {
-      margin-top: 20px;
-      font-size: 1.2em;
-      max-width: 700px;
-      padding: 15px;
-      border-radius: 10px;
-    }
-
-    .services {
-      background-color: #f0f7f7;
-    }
-
-    .gallery {
-      background-color: #fffbe6;
-    }
-
-    .services h2, .gallery h2, .map-section h2, .contact h2 {
-      font-size: 2.5em;
-      margin-bottom: 30px;
-    }
-
-    .service-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
-      width: 90%;
-      margin: 0 auto;
-    }
-
-    .service-box {
-      background: white;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      transition: transform 0.3s;
-      cursor: pointer;
-      text-decoration: none;
-      color: inherit;
-    }
-
-    .service-box:hover {
-      transform: scale(1.05);
-    }
-
-    .service-box img {
-      width: 100%;
-      height: 250px;
-      object-fit: cover;
-    }
-
-    .service-box p {
-      padding: 15px;
-      font-size: 1em;
-    }
+    .services { background-color: #f0f7f7; }
+    .gallery { background-color: #fffbe6; }
+    .contact { background-color: #e2f2f1; }
 
     .gallery-container {
       display: flex;
@@ -123,276 +64,108 @@
       width: 90%;
     }
 
-    .gallery-box {
-      width: 300px;
-      cursor: pointer;
-    }
-
-    .gallery-box img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 10px;
-      transition: transform 0.3s;
-    }
-
-    .gallery-box img:hover {
-      transform: scale(1.05);
-    }
-
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1001;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.9);
-    }
-
-    .modal-content {
-      margin: 5% auto;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      max-width: 1000px;
-    }
-
-    .modal-content img {
-      max-width: 300px;
-      border-radius: 10px;
-    }
-
-    .modal-content-title {
-      width: 100%;
-      color: #fff;
-      text-align: center;
-      margin-bottom: 15px;
-      font-size: 1.5em;
-      font-weight: bold;
-    }
-
-    .close {
-      position: absolute;
-      top: 20px;
-      right: 30px;
-      color: white;
-      font-size: 35px;
-      cursor: pointer;
-    }
-
     iframe {
       width: 90%;
       height: 400px;
       border: 0;
       border-radius: 15px;
     }
-
-    .map-description {
-      margin-top: 20px;
-      font-size: 1.1em;
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .contact {
-      background-color: #e2f2f1;
-    }
-
-    .contact-info, .contact-form {
-      max-width: 600px;
-      margin: 10px auto;
-      text-align: left;
-    }
-
-    .contact-form input, .contact-form textarea {
-      width: 100%;
-      padding: 12px;
-      margin-top: 10px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      font-size: 1em;
-    }
-
-    .contact-form button {
-      margin-top: 15px;
-      padding: 10px 20px;
-      background-color: #219e91;
-      color: white;
-      font-size: 1em;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    .contact-form button:hover {
-      background-color: #167a6d;
-    }
   </style>
 </head>
+
 <body>
 
- <nav>
+  <nav>
     <a href="#home">Home</a>
     <a href="{% url 'admin:index' %}">Admin</a>
     <a href="#services">Services</a>
     <a href="#gallery">Gallery</a>
     <a href="#map">Location</a>
     <a href="#contact">Contact</a>
-</nav>
+  </nav>
 
   <section class="hero" id="home">
     <h1>Welcome to Our Orphanage Home</h1>
-    <p>We provide love, shelter, education, and care for orphaned and vulnerable children to help them build a better future.</p>
+    <p>We provide love, shelter, education, and care for children to build a better future.</p>
   </section>
-
 
   <section class="services" id="services">
     <h2>Our Services</h2>
     <div class="service-container">
       <a href="{% url 'food' %}" class="service-box">
         <img src="{% static 'food.jpg.webp' %}">
-        <h3> Food Donation</h3>
-        <p>Nutritious meals served daily to keep our children healthy and active.</p>
+        <h3>Food Donation</h3>
+        <p>Nutritious meals served daily.</p>
       </a>
 
       <a href="{% url 'education' %}" class="service-box">
-        <img src="{% static 'study.jpg.avif' %}" alt="Education">
-        <h3> Sponsorship</h3>
-        <p>Quality education support with trained teachers and tutoring.</p>
+        <img src="{% static 'study.jpg.avif' %}">
+        <h3>Sponsorship</h3>
+        <p>Education support for children.</p>
       </a>
-      
+
       <a href="{% url 'oldage1' %}" class="service-box">
-      
-        <img src="{% static 'o8.jpg' %}" alt="Old Age">
+        <img src="{% static 'o8.jpg' %}">
         <h3>Oldage Home</h3>
-        <p>The great thing about getting older is that you don't lose all the other ages you've been.</p>
+        <p>Care and support for elders.</p>
       </a>
+
       <a href="{% url 'donation' %}" class="service-box">
-        <img src="{% static 'banner.jpg' %}" alt="Donation">
-        <h3> Donation</h3>
-        <p>Be generous to the poor orphans and those in need.</p>
+        <img src="{% static 'banner.jpg' %}">
+        <h3>Donation</h3>
+        <p>Support the poor and needy.</p>
       </a>
-      
     </div>
   </section>
 
-  
   <section class="gallery" id="gallery">
     <h2>Our Orphanage Life</h2>
     <div class="gallery-container">
+
       <div class="gallery-box" onclick="window.location.href='{% url 'infrastructure_gallery' %}'">
-        <img src="{% static 'building.avif' %}" alt="Infrastructure">
+        <img src="{% static 'building.avif' %}">
         <p>Infrastructure</p>
       </div>
-      <div class="gallery-box" onclick="window.location.href='{% url 'children_gallery' %}'">
-        <img src="{% static 'children1.avif' %}" alt="Children Images">
-        <p>Our orphan children images</p>
-      </div>
-      <div class="gallery-box" onclick="window.location.href='{% url 'donations_gallery' %}'">
-        <img src="{% static 'don.avif' %}" alt="Donation Images">
-        <p>Donation images</p>
-      </div>
-      <div class="gallery-box" onclick="window.location.href='{% url 'oldage_gallery' %}'">
-        <img src="{% static 'oldage.png' %}" alt="Oldage Home">
-        <p>Oldage home</p>
-      </div>
-    </div> 
-    
-  </section>
-  
 
-  
-  <!-- FIXED SECTION: removed the extra < -->
-  <section style="background-color:#E9E2EE; padding: 40px 20px;">
-    <h2 style="text-align: center; font-size: 2rem; margin-bottom: 30px; color: #333;">
-      🌟 Our Stars 🌟
-    </h2>
-  
-    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 40px;">
-  
-      <!-- Children Card -->
-      <a href="{% url 'children' %}" style="text-decoration: none;">
-        <div style="background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); overflow: hidden; width: 600px; transition: transform 0.3s ease-in-out;">
-          <img src="{% static 'c3.jpg' %}" alt="Our Children" style="width: 100%; height: 280px; object-fit: cover;">
-          <div style="padding: 20px;">
-            <h3 style="color: #007acc; font-size: 1.4rem; margin-bottom: 10px;">Our Children</h3>
-            <p style="color: #555; font-size: 1rem;">Meet the lovely kids growing with care, joy, and support in our home.</p>
-          </div>
-        </div>
-      </a>
-  
-      <!-- Old Age Card -->
-      <a href="{% url 'oldage' %}" style="text-decoration: none;">
-        <div style="background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); overflow: hidden; width: 600px; transition: transform 0.3s ease-in-out;">
-          <img src="{% static 'o7.jpg' %}" alt="Our Old Age" style="width: 100%; height: 280px; object-fit: cover;">
-          <div style="padding: 20px;">
-            <h3 style="color: #007acc; font-size: 1.4rem; margin-bottom: 10px;">Our Old Age</h3>
-            <p style="color: #555; font-size: 1rem;">Discover the stories and strength of our elder family members with dignity.</p>
-          </div>
-        </div>
-      </a>
-  
+      <div class="gallery-box" onclick="window.location.href='{% url 'children_gallery' %}'">
+        <img src="{% static 'children1.avif' %}">
+        <p>Children</p>
+      </div>
+
+      <div class="gallery-box" onclick="window.location.href='{% url 'donations_gallery' %}'">
+        <img src="{% static 'don.avif' %}">
+        <p>Donations</p>
+      </div>
+
+      <div class="gallery-box" onclick="window.location.href='{% url 'oldage_gallery' %}'">
+        <img src="{% static 'oldage.png' %}">
+        <p>Oldage Home</p>
+      </div>
+
     </div>
   </section>
-  
 
+  <section style="background-color:#E9E2EE; padding: 40px 20px;">
+    <h2>Our Stars</h2>
+  </section>
 
-  
   <section class="map-section" id="map">
     <h2>Our Location</h2>
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31120.54489962472!2d78.49121217720778!3d13.554512053662078!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bad539cbf20793b%3A0x8e9e3d4a9a1d31d2!2sChaitanya%20Society%2C%20Madanapalle%2C%20Andhra%20Pradesh%20517502!5e0!3m2!1sen!2sin!4v1721983566243!5m2!1sen!2sin""></iframe>
-    <div class="map-description">
-      <p><strong>Address:</strong> Good Shepherd Orphanage, Madanapalle, Andhra Pradesh 517325</p>
-      <p><strong>Directions:</strong> From the Madanapalle bus stand, take an auto/taxi toward College Road. About 10 minutes drive and known to locals.</p>
-    </div>
+
+    <!-- FIXED IFRAME -->
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31120.54489962472!2d78.49121217720778!3d13.554512053662078!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bad539cbf20793b%3A0x8e9e3d4a9a1d31d2!2sChaitanya%20Society%2C%20Madanapalle%2C%20Andhra%20Pradesh%20517502!5e0!3m2!1sen!2sin!4v1721983566243!5m2!1sen!2sin"></iframe>
+
   </section>
-  
-  
 
   <section class="contact" id="contact">
     <h2>Contact Us</h2>
   
     <div class="contact-info">
-      <p><strong>Email:</strong>anandaoldagehome.css.24@gmail.com</p>
-      <p><strong>Phone:</strong> +91 913306333, +91 9392548080</p>
-      <p><strong>Address:</strong> devatha nagar,4th cross,1st building,madanapalli</p>
-    </div>
-  
-    <div class="contact-form">
-      <h3>Send Us a Message</h3>
-      <form method="POST">
-        {% csrf_token %}
-        <input type="text" name="name" placeholder="Your Name" required>
-        <input type="text" name="contact_number" placeholder="Your Contact Number" required>
-        <input type="email" name="email" placeholder="Your Email" required>
-        <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
-        <button type="submit">Submit</button>
-      </form>
+      <p>Email: anandaoldagehome.css.24@gmail.com</p>
+      <p>Phone: +91 913306333, +91 9392548080</p>
+      <p>Address: Devatha Nagar, Madanapalle</p>
     </div>
   </section>
-  
-  {% if success %}
-  <script>
-    alert("Your message has been sent. We will contact you soon!");
-  </script>
-  {% endif %}
-  
-  
-  
-
-  <script>
-    function openModal(id) {
-      document.getElementById(id).style.display = 'block';
-    }
-
-    function closeModal(id) {
-      document.getElementById(id).style.display = 'none';
-    }
-  </script>
 
 </body>
 </html>
